@@ -109,6 +109,7 @@ fi
 SCALA_HOME=/usr/local/share/scala
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 PATH=$PATH:$SCALA_HOME/bin # add scala to path
+PATH=$PATH:/usr/local/share/sbt/bin # add sbt to path
 [[ -s ~/.rvm/scripts/rvm ]] && source ~/.rvm/scripts/rvm
 
 
