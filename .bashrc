@@ -106,10 +106,12 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
+JAVA_HOME=/usr/bin/javac
 SCALA_HOME=/usr/local/share/scala
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-PATH=$PATH:$SCALA_HOME/bin # add scala to path
+PATH=$PATH:$SCALA_HOME/bin:$JAVA_HOME # add scala to path
 PATH=$PATH:/usr/local/share/sbt/bin # add sbt to path
+PATH=$PATH:$HOME/clojure_stuff/bin # add lein to path
 [[ -s ~/.rvm/scripts/rvm ]] && source ~/.rvm/scripts/rvm
 
 
@@ -117,11 +119,3 @@ PATH=$PATH:/usr/local/share/sbt/bin # add sbt to path
 PS1='\[\e]0;\u@\h: \W\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]`__git_ps1`\$ '
 
 # personal alias
-alias .pi="cd ~/projects/cdris_patient_identity"
-alias .cdr="cd ~/projects/cdris_repo"
-alias .hcc="cd ~/projects/hcc_portal"
-alias .ui="cd ~/projects/cdris_test_ui"
-alias .idn="cd ~/projects/cdris_idn"
-alias .pup="cd ~/projects/cdris_puppet"
-alias .api="cd ~/projects/cdris_api_client"
-alias .repl="java -cp /usr/share/java/clojure-1.1.0.jar clojure.main"
