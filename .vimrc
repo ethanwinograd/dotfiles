@@ -19,3 +19,10 @@ set tabstop=2
 
 "make arrow keys work
 set nocp
+
+set wildmenu
+
+"NerdTree settings
+map <C-n> :NERDTreeToggle<CR>
+let NERDTreeShowHidden=1
+

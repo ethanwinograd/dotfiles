@@ -13,9 +13,13 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+#HISTSIZE=1000
+#HISTFILESIZE=2000
 
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=500000
+#HISTFILESIZE=400000
+HISTTIMEFORMAT="%m/%d/%y %T "
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
@@ -54,7 +58,7 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$K8ENV\$ '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -85,6 +89,11 @@ fi
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+alias api='cd ~/projects/kamioka/kamioka_api'
+alias jupc='cd ~/projects/jupiter/JupiterClient'
+alias jups='cd ~/projects/jupiter/JupiterServer'
+alias ont='cd ~/projects/ontology_api'
+alias util='cd ~/projects/utility_scripts'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -106,16 +115,43 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-JAVA_HOME=/usr/bin/javac
-SCALA_HOME=/usr/local/share/scala
+
+USER=winograde
+
+if which jenv > /dev/null; then eval "$(jenv init -)"; fi
+export JAVA_HOME="$HOME/.jenv/versions/`jenv version-name`"
+alias jenv_set_java_home='export JAVA_HOME="$HOME/.jenv/versions/`jenv version-name`"'
+
+#JAVA_HOME=/usr/bin/javac
+PATH=$PATH:/usr/local/go/bin
+PATH=$PATH:/usr/local/bin/
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-PATH=$PATH:$SCALA_HOME/bin:$JAVA_HOME # add scala to path
 PATH=$PATH:/usr/local/share/sbt/bin # add sbt to path
 PATH=$PATH:$HOME/clojure_stuff/bin # add lein to path
+PATH=$PATH:~/projects/utility_scripts
 [[ -s ~/.rvm/scripts/rvm ]] && source ~/.rvm/scripts/rvm
 
+export KAMIOKA_DIR=/Users/winograde/projects/kamioka/kamioka_api/
+export ONTOLOGY_DIR=/Users/winograde/projects/ontology_api/
+
+source ~/.git-completion.bash
 
 #show the git branch in the prompt
-PS1='\[\e]0;\u@\h: \W\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]`__git_ps1`\$ '
+source ~/.bash_git
+PS1='\[\e]0;\u@\h: \W\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;31m\](`kubectl config view|grep current-context|tail -c +18`)\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]:`__git_ps1`\$ '
 
 # personal alias
+
+export AWS_REPO_URL=660262356760.dkr.ecr.us-east-1.amazonaws.com
+export AWS_CA_BUNDLE=/Users/winograde/.ssh/UPMC/UPMC-Root-CA.PEM
+
+
+[[ -s "/home/ethan/.gvm/scripts/gvm" ]] && source "/home/ethan/.gvm/scripts/gvm"
+
+# kubectl completion
+source <(kubectl completion bash)
+
+# toit completion
+/Users/winograde/projects/utility_scripts/toit_helpers.sh
+export NVM_DIR="/Users/winograde/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
